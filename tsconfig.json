@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "NodeNext",
+      "esModuleInterop" :true,
+      "outDir": "build",
+      "allowJs": true
+    },
+    "include": ["src"],
+    "exclude": [
+      "node_modules",
+      "**/*.spec.ts"
+    ],
+    "ts-node": {"esm": true}
+}
