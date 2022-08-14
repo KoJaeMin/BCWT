@@ -20,6 +20,7 @@ This project is **Block Chain with TypeScript**.
 |Refactor|Code Refactoring|코드 리펙토링
 |Perf|Performance Improvements|성능 개선
 |Chore|Chores|중요하지 않은 자잘한 수정
+|Merge|Merge|병합
 
 
 ## Contact
