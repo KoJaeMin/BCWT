@@ -18,7 +18,8 @@ class Chain{
      * @param data 
      */
     public addBlock(data : string) : void{
-        const newBlock = Block.generateBlock(this.getLatestBlock(),data);
+        const previousBlock = this.getLength() > 0 ? this.getLatestBlock():new Block('','',0,'',0);
+        const newBlock = Block.generateBlock(previousBlock,data);
         this.blocks.push(newBlock);
     }
     /**
@@ -42,10 +43,14 @@ class Chain{
     public getLength() : number{
         return this.blocks.length;
     }
+    /**
+     * Get BlockChain Validation
+     * @returns BlockChain Validation
+     */
     public IsValid() : boolean{
         let validation = true;
         for(let i = 1; i < this.getLength();i++){
-            if(this.blocks[i].preHash !== this.blocks[i].hash)
+            if(this.blocks[i].preHash !== this.blocks[i-1].hash)
                 validation = false;
         }
         return validation;
