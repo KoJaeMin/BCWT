@@ -1,5 +1,6 @@
 import crypto from 'crypto';
-import config from '../config/index'
+import config from '../config/index';
+import hexToBinary from "hex-to-binary";
 
 interface BlockShape{
     hash : string,
@@ -40,7 +41,7 @@ class Block implements BlockShape{
      * @param timestamp time when block made
      * @returns hash value
      */
-    private static generateHash(preHash:string, height : number, data:string, timestamp : number, nonce:number) : string{
+    private static generateHash(preHash:string, height : number, data:string,timestamp:number, nonce:number) : string{
         /// crypto.randomBytes(16).toString('hex')를 이용하여 Salt사용
         const toHash = `${preHash}${height}${data}${timestamp}${nonce}${crypto.randomBytes(16).toString('hex')}`;
         return crypto.createHash(config.HASH_ALGORITHM).update(toHash).digest("hex");
@@ -54,6 +55,11 @@ class Block implements BlockShape{
         const newer : Block = Block.getNonce(generation);
         return newer;
     }
+    /**
+     * Minig
+     * @param block 
+     * @returns 
+     */
     public static getNonce(block : Block) : Block{
         let hash : string;
         let nonce : number = 0;
@@ -61,7 +67,7 @@ class Block implements BlockShape{
             nonce++;
             block.nonce = nonce;
             hash = Block.generateHash(block.preHash,block.height,block.data,block.timestamp,block.nonce);
-            const binary : string = parseInt(hash,16).toString(2);
+            const binary : string = hexToBinary(hash);
             const result : boolean = binary.startsWith('0'.repeat(block.difficulty));
             if(result){
                 block.hash = hash;
