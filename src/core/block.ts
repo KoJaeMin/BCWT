@@ -1,4 +1,5 @@
-import * as crypto from 'crypto';
+import crypto from 'crypto';
+import config from '../config/index'
 
 interface BlockShape{
     hash : string,
@@ -42,11 +43,11 @@ class Block implements BlockShape{
     private static generateHash(preHash:string, height : number, data:string, timestamp : number, nonce:number) : string{
         /// crypto.randomBytes(16).toString('hex')를 이용하여 Salt사용
         const toHash = `${preHash}${height}${data}${timestamp}${nonce}${crypto.randomBytes(16).toString('hex')}`;
-        return crypto.createHash('sha256').update(toHash).digest("hex");
+        return crypto.createHash(config.HASH_ALGORITHM).update(toHash).digest("hex");
     }
     public getDifficulty():number{
         const len : number = this.height.toString(2).length;
-        return len < 10 ? 0 : Math.floor(this.height/(2*len));
+        return this.height > 1 ?Math.floor(Math.log1p(this.height)/Math.log1p(len))-Math.floor(Math.atan(this.height)): 0;
     }
     public static generateBlock(previosBlock : Block, data:string) : Block{
         const generation : Block = new Block('',previosBlock.hash,previosBlock.height+1,data,0);
