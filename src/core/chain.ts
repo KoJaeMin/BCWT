@@ -42,6 +42,14 @@ class Chain{
     public getLength() : number{
         return this.blocks.length;
     }
+    public IsValid() : boolean{
+        let validation = true;
+        for(let i = 1; i < this.getLength();i++){
+            if(this.blocks[i].preHash !== this.blocks[i].hash)
+                validation = false;
+        }
+        return validation;
+    }
 }
 
 
