@@ -46,14 +46,7 @@ if(process.env.NODE_ENV !== 'production') {
             level : 'info',
             format : winston.format.combine(
                 winston.format.ms(),
-                winston.format.colorize({
-                    colors : {
-                        "error" : "bold red",
-                        "warn" : "yellow",
-                        "info" : "green",
-                    }
-                }),
-                winston.format.simple(),
+                winston.format.simple()
             ),
         })
     );
