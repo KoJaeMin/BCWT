@@ -31,6 +31,7 @@ const logger : winston.Logger = winston.createLogger({
 if(process.env.NODE_ENV !== 'production') {
     logger.add(
         new winston.transports.Console({
+            level : 'http',
             format : winston.format.combine(
                 winston.format.ms(),
                 winston.format.prettyPrint({
@@ -40,6 +41,17 @@ if(process.env.NODE_ENV !== 'production') {
             ),
         })
     );
+
+    logger.add(
+        new winston.transports.Console({
+            level : 'info',
+            format : winston.format.combine(
+                winston.format.ms(),
+                winston.format.simple()
+            ),
+        })
+    );
+    
 }
 
 export default logger;
