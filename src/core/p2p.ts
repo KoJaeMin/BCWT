@@ -1,11 +1,7 @@
 import ws from 'ws';
 import Chain from './chain';
 import config from '../config/index';
-<<<<<<< HEAD
-import logger from '../utills/logger';
-=======
 import logger from '../utils/logger';
->>>>>>> logger
 import { IncomingMessage } from 'http';
 
 const mylog = logger;
