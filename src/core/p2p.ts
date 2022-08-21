@@ -44,6 +44,9 @@ class P2PServer extends Chain{
         })
         socket.send(`Success`);
     }
+    public getConnection() : ws[]{
+        return JSON.parse(JSON.stringify(this.sockets));
+    }
 }
 
 export default P2PServer;
