@@ -11,6 +11,12 @@ export default (app : Router , ws : p2p) =>{
         res.send('Info api');
     });
     /**
+     * 연결 정보 조회
+     */
+    route.get('/connection',(req : Request, res : Response)=>{
+        res.json(ws.getConnection())
+    })
+    /**
      * blockchain 정보 조회
      */
     route.get('/blockchain', (req : Request, res : Response)=>{
