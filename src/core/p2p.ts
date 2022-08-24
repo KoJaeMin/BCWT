@@ -13,8 +13,8 @@ class P2PServer extends Chain{
         this.sockets = [];
     }
 
-    private listen() : void{
-        const server = new ws.Server({port:config.SERVER_PORT});
+    public listen() : void{
+        const server = new ws.Server({port:config.P2P_PORT});
         server.on("connection",(socket,request)=>{
             mylog.http("WebSocket connected",{
                 request : <IncomingMessage>request,
@@ -24,6 +24,7 @@ class P2PServer extends Chain{
                 remotePort : <number> request.socket.remotePort,
             });
             this.connectSocket(socket);
+            this.broadcasting(socket);
         });
     }
     
@@ -36,14 +37,19 @@ class P2PServer extends Chain{
 
     public connectSocket(socket : ws.WebSocket){
         this.sockets.push(socket);
-        socket.on("message",(data : string)=>{
-            mylog.info(data ,{
-                protocol : <string> socket.protocol,
-                url : <string> socket.url
-            });
-        })
         socket.send(`Success`);
     }
+
+    public broadcasting(socket : ws.WebSocket){
+        socket.on("message",(data : string)=>{
+            const socketno : number = this.sockets.findIndex((index)=> index===socket);
+            for(let i in this.sockets){
+                if(Number(i)!==socketno)
+                    this.sockets[i].send(data);
+            }      
+        })
+    }
+
     public getConnection() : ws[]{
         return JSON.parse(JSON.stringify(this.sockets));
     }
