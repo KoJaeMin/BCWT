@@ -8,4 +8,7 @@ const ws = new P2PServer();
 
 loader(app , ws);
 
-const server = app.listen(config.SERVER_PORT,()=>{console.log(`server onload # port: ${config.SERVER_PORT}`)})
+const server = app.listen(config.SERVER_PORT,()=>{
+    console.log(`server onload # port: ${config.SERVER_PORT}`);
+    ws.listen();
+})
