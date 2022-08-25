@@ -2,20 +2,6 @@ import crypto from 'crypto';
 import config from '../config/index';
 import hexToBinary from "hex-to-binary";
 
-interface BlockShape{
-    hash : string,
-    /**
-     * hash를 위한 값들
-     */
-    preHash : string,
-    data : string,
-    timestamp: number,
-    height : number,
-    nonce : number,
-    difficulty : number,
-    
-}
-
 class Block implements BlockShape{
     
     public timestamp: number;
