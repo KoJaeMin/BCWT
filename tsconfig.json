@@ -4,9 +4,10 @@
       "module": "NodeNext",
       "esModuleInterop" :true,
       "outDir": "build",
-      "allowJs": true
+      "allowJs": true,
+      "typeRoots": ["./node_modules/@types", "./@types"],
     },
-    "include": ["src"],
+    "include": ["src", "@types"],
     "exclude": [
       "node_modules",
       "**/*.spec.ts"
