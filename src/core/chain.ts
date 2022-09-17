@@ -17,11 +17,16 @@ class Chain{
      * Add new Block in BlockChain
      * @param data 
      */
-    public addBlock(data : string) : Block{
+    public createBlock(data : string) : Block{
         const previousBlock = this.getLength() > 0 ? this.getLatestBlock():new Block('','',0,'',0);
-        const newBlock = Block.generateBlock(previousBlock,data);
+        let newBlock = Block.generateBlock(previousBlock,data);
+        while(this.getLatestBlock().height >= newBlock.height)
+            newBlock = Block.generateBlock(this.getLatestBlock(),data);
         this.blocks.push(newBlock);
         return JSON.parse(JSON.stringify(newBlock));
+    }
+    protected addBlock(block : Block){
+        this.blocks.push(block);
     }
     /**
      * Get Copy of BlockChain
